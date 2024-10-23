@@ -1,5 +1,5 @@
 image:
-  file: .gitpod.dockerfile
+  file: .gitpod.Dockerfile
 tasks:
   - name: Android Appetize info
     # Gitpod is not able to run emulators within a worspace at this stage as
@@ -43,7 +43,6 @@ tasks:
         rm -f /workspace/.template_init
         flutter create --project-name gitpod_flutter_quickstart .
       } fi
-      flutter pub get
       flutter build -v linux
       flutter build -v web
 
@@ -85,4 +84,3 @@ ports:
 vscode:
   extensions:
     - dart-code.flutter
-    - dart-code.dart-code
