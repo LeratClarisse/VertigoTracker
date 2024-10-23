@@ -3,7 +3,7 @@ FROM gitpod/workspace-full-vnc:latest
 
 # Set environment variables
 ENV ANDROID_HOME=$HOME/androidsdk \
-    FLUTTER_VERSION=3.13.8-stable \
+    FLUTTER_VERSION=stable \
     QTWEBENGINE_DISABLE_SANDBOX=1
 
 # Install dependencies for Flutter and Android
@@ -36,6 +36,7 @@ RUN chown -R gitpod:gitpod /home/gitpod/flutter /home/gitpod/.config
 # Enable Flutter web and other configurations
 USER gitpod
 RUN flutter config --enable-web && \
+    flutter upgrade && \
     flutter precache && \
     for _plat in web linux-desktop; do flutter config --enable-${_plat}; done && \
     flutter config --android-sdk $ANDROID_HOME
@@ -52,10 +53,13 @@ RUN _file_name="commandlinetools-linux-8092744_latest.zip" && \
 
 # Accept Android SDK licenses and install additional SDK components
 RUN yes | flutter doctor --android-licenses && \
-    yes | sdkmanager "platform-tools" "build-tools;31.0.0" "platforms;android-31"
+    yes | sdkmanager "platform-tools" "build-tools;33.0.0" "platforms;android-33"
 
 # Perform additional Flutter setup
 RUN flutter doctor
+
+# Update Dart and Flutter dependencies
+RUN flutter pub upgrade
 
 # Set the workspace
 WORKDIR /workspace
