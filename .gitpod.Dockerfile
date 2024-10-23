@@ -43,6 +43,7 @@ RUN flutter config --enable-web && \
 # Install Android command line tools
 RUN _file_name="commandlinetools-linux-8092744_latest.zip" && \
     wget "https://dl.google.com/android/repository/$_file_name" && \
+    mkdir -p $ANDROID_HOME/cmdline-tools && \
     unzip "$_file_name" -d $ANDROID_HOME/cmdline-tools && \
     rm -f "$_file_name" && \
     mkdir -p $ANDROID_HOME/cmdline-tools/latest && \
