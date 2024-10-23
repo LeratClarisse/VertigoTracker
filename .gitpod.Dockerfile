@@ -43,10 +43,11 @@ RUN flutter config --enable-web && \
 # Install Android command line tools
 RUN _file_name="commandlinetools-linux-8092744_latest.zip" && \
     wget "https://dl.google.com/android/repository/$_file_name" && \
-    unzip "$_file_name" -d $ANDROID_HOME && \
+    unzip "$_file_name" -d $ANDROID_HOME/cmdline-tools && \
     rm -f "$_file_name" && \
     mkdir -p $ANDROID_HOME/cmdline-tools/latest && \
-    mv $ANDROID_HOME/cmdline-tools/{bin,lib} $ANDROID_HOME/cmdline-tools/latest
+    mv $ANDROID_HOME/cmdline-tools/cmdline-tools/* $ANDROID_HOME/cmdline-tools/latest && \
+    rm -rf $ANDROID_HOME/cmdline-tools/cmdline-tools
 
 # Accept Android SDK licenses and install additional SDK components
 RUN yes | flutter doctor --android-licenses && \
