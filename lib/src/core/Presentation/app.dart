@@ -12,9 +12,7 @@ class App extends StatelessWidget {
         builder: (context, box, widget) {
           bool darkMode = box.get('darkmode', defaultValue: false);
           return MaterialApp(
-              themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
-              darkTheme: ThemeData.dark(),
-              home: const Home());
+              themeMode: darkMode ? ThemeMode.dark : ThemeMode.light, darkTheme: ThemeData.light(), home: const Home());
         });
   }
 }
