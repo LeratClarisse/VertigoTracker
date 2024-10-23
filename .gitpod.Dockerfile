@@ -30,6 +30,9 @@ RUN curl -o flutter.tar.xz "https://storage.googleapis.com/flutter_infra_release
 # Add Flutter to the PATH
 ENV PATH="$HOME/flutter/bin:$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
 
+# Set ownership of the Flutter directory to the gitpod user
+RUN chown -R gitpod:gitpod /home/gitpod/flutter
+
 # Enable Flutter web and other configurations
 USER gitpod
 RUN flutter config --enable-web && \
