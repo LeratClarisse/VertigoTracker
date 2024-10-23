@@ -23,9 +23,8 @@ RUN apt-get update && \
 
 # Install Flutter
 RUN curl -o flutter.tar.xz "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}.tar.xz" && \
-    tar xf flutter.tar.xz && \
+    tar xf flutter.tar.xz -C /home/gitpod && \
     rm flutter.tar.xz && \
-    mv flutter /home/gitpod/flutter && \
     /home/gitpod/flutter/bin/flutter doctor
 
 # Add Flutter to the PATH
