@@ -3,7 +3,7 @@ FROM gitpod/workspace-full-vnc:latest
 
 # Set environment variables
 ENV ANDROID_HOME=$HOME/androidsdk \
-    FLUTTER_VERSION=stable \
+    FLUTTER_VERSION=3.24.0-stable \
     QTWEBENGINE_DISABLE_SANDBOX=1
 
 # Install dependencies for Flutter and Android
