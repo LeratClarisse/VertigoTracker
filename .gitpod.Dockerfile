@@ -32,6 +32,7 @@ ENV PATH="$HOME/flutter/bin:$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_
 
 # Set ownership of the Flutter directory and .config directory to the gitpod user
 RUN chown -R gitpod:gitpod /home/gitpod/flutter /home/gitpod/.config
+RUN chown -R gitpod:gitpod /home/gitpod/.dart-tool
 
 # Enable Flutter web and other configurations
 USER gitpod
