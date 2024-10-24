@@ -59,7 +59,7 @@ android {
     signingConfigs {
         release {
             //From decoded key
-            storeFile = file('D:/Programmation/upload-keystore.jks')
+            // storeFile = file('D:/Programmation/upload-keystore.jks')
             //From key.properties
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']

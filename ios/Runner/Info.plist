@@ -13,9 +13,9 @@
 		<key>CFBundleInfoDictionaryVersion</key>
 		<string>6.0</string>
 		<key>CFBundleName</key>
-		<string>My app</string>
+		<string>Vertigo Tracker</string>
 		<key>CFBundleDisplayName</key>
-		<string>myapp</string>
+		<string>vertigotracker</string>
 		<key>CFBundlePackageType</key>
 		<string>APPL</string>
 		<key>CFBundleShortVersionString</key>
