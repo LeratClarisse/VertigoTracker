@@ -59,8 +59,8 @@ RUN yes | flutter doctor --android-licenses && \
 # Perform additional Flutter setup
 RUN flutter doctor
 
-# Update Dart and Flutter dependencies
-RUN flutter pub upgrade
-
 # Set the workspace
 WORKDIR /workspace
+
+# Update Dart and Flutter dependencies
+RUN flutter pub upgrade
