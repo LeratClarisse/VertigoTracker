@@ -61,3 +61,6 @@ RUN flutter doctor
 
 # Set the workspace
 WORKDIR /workspace
+
+USER root
+RUN chown -R gitpod:gitpod /home/gitpod/.pub-cache
