@@ -61,6 +61,3 @@ RUN flutter doctor
 
 # Set the workspace
 WORKDIR /workspace
-
-# Update Dart and Flutter dependencies
-RUN flutter pub upgrade
