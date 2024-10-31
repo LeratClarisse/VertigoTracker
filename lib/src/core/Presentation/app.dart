@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'home.dart';
+import 'bloc/home_bloc.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -12,7 +12,7 @@ class App extends StatelessWidget {
         builder: (context, box, widget) {
           bool darkMode = box.get('darkmode', defaultValue: false);
           return MaterialApp(
-              themeMode: darkMode ? ThemeMode.dark : ThemeMode.light, darkTheme: ThemeData.light(), home: const Home());
+              themeMode: darkMode ? ThemeMode.dark : ThemeMode.light, darkTheme: ThemeData.light(), home: const HomePage());
         });
   }
 }
