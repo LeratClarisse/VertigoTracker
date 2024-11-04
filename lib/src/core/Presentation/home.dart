@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vertigotracker/src/features/logs/Presentation/log_vertigo_form_page.dart';
+import 'package:vertigotracker/src/features/reminders/Presentation/reminders_form_page.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -12,9 +13,22 @@ class Home extends StatelessWidget {
     );
 
     if (result == true) {
-      // Optionally, you could update any UI on the Home page after logging an episode
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Vertigo episode logged successfully')),
+      );
+    }
+  }
+
+  // Method to navigate to the create reminder form page
+  void _navigateToCreateReminderForm(BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => ReminderFormPage()),
+    );
+
+    if (result == true) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Reminder created successfully')),
       );
     }
   }
@@ -61,9 +75,7 @@ class Home extends StatelessWidget {
           ),
           SizedBox(height: 10),
           ElevatedButton(
-            onPressed: () {
-              // Navigate to set a new medication reminder
-            },
+            onPressed: () => _navigateToCreateReminderForm(context),
             child: Text('Set Medication Reminder'),
           ),
         ],
