@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:vertigotracker/src/features/logs/Presentation/log_vertigo_form_page.dart';
 import 'package:vertigotracker/src/features/logs/Presentation/logs.dart';
 import 'package:vertigotracker/src/features/reminders/Presentation/reminders.dart';
 
@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
-  static const List<Widget> _pages = <Widget>[Home(), LogsScreen(), RemindersScreen()];
+  static final List<Widget> _pages = <Widget>[Home(), LogsScreen(), RemindersScreen()];
 
   void _onItemTapped(int index) {
     setState(() {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 class RemindersScreen extends StatelessWidget {
   const RemindersScreen({Key? key}) : super(key: key);

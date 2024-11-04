@@ -1,8 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:vertigotracker/src/features/logs/Presentation/log_vertigo_form_page.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
+
+// Method to navigate to the log vertigo form page
+  void _navigateToLogVertigoForm(BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => LogVertigoFormPage()),
+    );
+
+    if (result == true) {
+      // Optionally, you could update any UI on the Home page after logging an episode
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Vertigo episode logged successfully')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +56,7 @@ class Home extends StatelessWidget {
 
           // Quick Actions Area
           ElevatedButton(
-            onPressed: () {
-              // Navigate to add a new vertigo episode
-            },
+            onPressed: () => _navigateToLogVertigoForm(context),
             child: Text('Log Vertigo Episode'),
           ),
           SizedBox(height: 10),
