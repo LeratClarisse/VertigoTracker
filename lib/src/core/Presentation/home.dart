@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:vertigotracker/src/features/logs/Domain/entity/vertigo_episode.dart';
 import 'package:vertigotracker/src/features/logs/Presentation/log_vertigo_form_page.dart';
+import 'package:vertigotracker/src/features/reminders/Domain/entity/reminder.dart';
 import 'package:vertigotracker/src/features/reminders/Presentation/reminders_form_page.dart';
 
 class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+  final VertigoEpisode? lastVertigo;
+  final Reminder? nextReminder;
+  const Home({Key? key, required this.lastVertigo, required this.nextReminder}) : super(key: key);
 
 // Method to navigate to the log vertigo form page
   void _navigateToLogVertigoForm(BuildContext context) async {
@@ -54,12 +58,12 @@ class Home extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    'Next Reminder: 8:00 AM',
+                    'Next Reminder: ${nextReminder != null ? "${nextReminder!.time.hour}:${nextReminder!.time.minute} - ${nextReminder!.message}" : "No reminders set"}',
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Last Episode: 2 days ago',
+                    'Last Episode: ${lastVertigo != null ? "${_formatDate(lastVertigo!.date)} - Duration: ${lastVertigo!.durationHours}h ${lastVertigo!.durationMinutes}m" : "No episodes logged"}',
                     style: TextStyle(fontSize: 16),
                   ),
                 ],
@@ -81,5 +85,10 @@ class Home extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  // Helper function to format date
+  String _formatDate(DateTime date) {
+    return "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
   }
 }
