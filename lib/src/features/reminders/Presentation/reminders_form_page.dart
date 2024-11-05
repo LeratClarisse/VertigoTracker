@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:vertigotracker/src/core/utils/reminders_utils.dart';
+import 'package:vertigotracker/src/core/utils/notification_service.dart';
 import 'package:vertigotracker/src/features/reminders/Domain/entity/reminder.dart';
 
 class ReminderFormPage extends StatefulWidget {
@@ -43,7 +43,7 @@ class _ReminderFormPageState extends State<ReminderFormPage> {
       await box.add(reminder);
 
       // Schedule the notification
-      await scheduleDailyReminder(reminder);
+      await NotificationService.scheduleDailyReminder(reminder);
 
       Navigator.pop(context, true); // Return to the list page
     }
