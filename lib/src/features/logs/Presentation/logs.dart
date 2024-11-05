@@ -34,6 +34,38 @@ class _LogsScreenState extends State<LogsScreen> {
     }
   }
 
+  void _showDeleteConfirmationDialog(int index) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Confirm Deletion'),
+          content: Text('Are you sure you want to delete this vertigo episode?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                _deleteVertigoEpisode(index);
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _deleteVertigoEpisode(int index) {
+    vertigoBox.deleteAt(index); // Delete the episode at the specified index
+    setState(() {}); // Refresh the UI after deletion
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,6 +83,10 @@ class _LogsScreenState extends State<LogsScreen> {
                 return ListTile(
                   title: Text("Episode on ${episode.date.toLocal()}"),
                   subtitle: Text("Duration: ${episode.durationHours}h ${episode.durationMinutes}m"),
+                  trailing: IconButton(
+                    icon: Icon(Icons.clear, color: Colors.red),
+                    onPressed: () => _showDeleteConfirmationDialog(index),
+                  ),
                 );
               },
             );
