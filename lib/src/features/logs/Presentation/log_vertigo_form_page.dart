@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:vertigotracker/src/features/logs/Domain/entity/vertigo_episode.dart';
+import 'package:vertigotracker/src/features/logs/Presentation/widgets/duration_picker.dart';
 
 class LogVertigoFormPage extends StatefulWidget {
   const LogVertigoFormPage({Key? key}) : super(key: key);
@@ -17,7 +18,24 @@ class _LogVertigoFormPageState extends State<LogVertigoFormPage> {
   int _durationMinutes = 0;
   bool _nausea = false;
   bool _throwUp = false;
+  bool _acouphene = false;
+  bool _earObstructed = false;
   String _comment = '';
+
+  // Method to open the Duration Picker and set the selected duration
+  void _selectDuration() async {
+    showDurationPicker(
+      context,
+      _durationHours,
+      _durationMinutes,
+      (duration) {
+        setState(() {
+          _durationHours = duration.inHours;
+          _durationMinutes = duration.inMinutes % 60;
+        });
+      },
+    );
+  }
 
   Future<void> _selectDate() async {
     final DateTime? picked = await showDatePicker(
@@ -60,6 +78,8 @@ class _LogVertigoFormPageState extends State<LogVertigoFormPage> {
         durationMinutes: _durationMinutes,
         nausea: _nausea,
         throwUp: _throwUp,
+        acouphene: _acouphene,
+        earObstructed: _earObstructed,
         comment: _comment,
       );
 
@@ -94,29 +114,11 @@ class _LogVertigoFormPageState extends State<LogVertigoFormPage> {
                 onTap: _selectTime,
               ),
 
-              // Duration Input
-              Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      decoration: InputDecoration(labelText: 'Duration (Hours)'),
-                      keyboardType: TextInputType.number,
-                      onChanged: (value) {
-                        _durationHours = int.tryParse(value) ?? 0;
-                      },
-                    ),
-                  ),
-                  SizedBox(width: 16),
-                  Expanded(
-                    child: TextFormField(
-                      decoration: InputDecoration(labelText: 'Duration (Minutes)'),
-                      keyboardType: TextInputType.number,
-                      onChanged: (value) {
-                        _durationMinutes = int.tryParse(value) ?? 0;
-                      },
-                    ),
-                  ),
-                ],
+              // Duration picker with display
+              ListTile(
+                title: Text("Duration: ${_durationHours}h ${_durationMinutes}m"),
+                trailing: Icon(Icons.timer),
+                onTap: _selectDuration,
               ),
 
               // Nausea Toggle
@@ -137,6 +139,28 @@ class _LogVertigoFormPageState extends State<LogVertigoFormPage> {
                 onChanged: (bool value) {
                   setState(() {
                     _throwUp = value;
+                  });
+                },
+              ),
+
+              // Acouphene Toggle
+              SwitchListTile(
+                title: Text("Acouphene"),
+                value: _acouphene,
+                onChanged: (bool value) {
+                  setState(() {
+                    _acouphene = value;
+                  });
+                },
+              ),
+
+              // Ear obstructed Toggle
+              SwitchListTile(
+                title: Text("Ear obstructed"),
+                value: _earObstructed,
+                onChanged: (bool value) {
+                  setState(() {
+                    _earObstructed = value;
                   });
                 },
               ),

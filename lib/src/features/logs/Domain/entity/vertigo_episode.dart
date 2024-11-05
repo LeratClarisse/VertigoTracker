@@ -23,6 +23,12 @@ class VertigoEpisode extends HiveObject {
   bool throwUp;
 
   @HiveField(6)
+  bool acouphene;
+
+  @HiveField(7)
+  bool earObstructed;
+
+  @HiveField(8)
   String comment;
 
   VertigoEpisode({
@@ -32,6 +38,8 @@ class VertigoEpisode extends HiveObject {
     required this.durationMinutes,
     required this.nausea,
     required this.throwUp,
+    required this.acouphene,
+    required this.earObstructed,
     required this.comment,
   });
 }
