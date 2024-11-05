@@ -29,6 +29,38 @@ class _ReminderListScreenState extends State<ReminderListScreen> {
     }
   }
 
+  void _showDeleteConfirmationDialog(int index) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Confirm Deletion'),
+          content: Text('Are you sure you want to delete this reminder?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                _deleteReminder(index);
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _deleteReminder(int index) {
+    reminderBox.deleteAt(index); // Delete the reminder at the specified index
+    setState(() {}); // Refresh the UI after deletion
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,6 +78,10 @@ class _ReminderListScreenState extends State<ReminderListScreen> {
                 return ListTile(
                   title: Text("Reminder: ${reminder.message}"),
                   subtitle: Text("Time: ${reminder.time.hour}:${reminder.time.minute}"),
+                  trailing: IconButton(
+                    icon: Icon(Icons.clear, color: Colors.red),
+                    onPressed: () => _showDeleteConfirmationDialog(index),
+                  ),
                 );
               },
             );
