@@ -9,7 +9,16 @@ class Home extends StatelessWidget {
   final Reminder? nextReminder;
   const Home({Key? key, required this.lastVertigo, required this.nextReminder}) : super(key: key);
 
-// Method to navigate to the log vertigo form page
+  // Calculate the days since the last vertigo episode
+  int _daysSinceLastVertigo() {
+    if (lastVertigo == null) return 0;
+    final now = DateTime.now();
+    final lastEpisodeDate = lastVertigo!.date;
+    final difference = now.difference(lastEpisodeDate).inDays;
+    return difference; // Count partial days as a full day
+  }
+
+  // Method to navigate to the log vertigo form page
   void _navigateToLogVertigoForm(BuildContext context) async {
     final result = await Navigator.push(
       context,
@@ -42,6 +51,7 @@ class Home extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Daily Summary Cards
@@ -65,6 +75,11 @@ class Home extends StatelessWidget {
                   Text(
                     'Last Episode: ${lastVertigo != null ? "${_formatDate(lastVertigo!.date)} - Duration: ${lastVertigo!.durationHours}h ${lastVertigo!.durationMinutes}m" : "No episodes logged"}',
                     style: TextStyle(fontSize: 16),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Days Since Last Episode: ${lastVertigo != null ? _daysSinceLastVertigo() : "No episodes logged"}',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                 ],
               ),

@@ -28,6 +28,8 @@ class _HomePageState extends State<HomePage> {
   Future<void> _loadData() async {
     final vertigoBox = Hive.box<VertigoEpisode>('vertigoEpisodes');
     final reminderBox = Hive.box<Reminder>('reminders');
+    lastVertigo = null;
+    nextReminder = null;
 
     // Get the last vertigo episode
     if (vertigoBox.isNotEmpty) {
@@ -68,9 +70,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text('Vertigo Tracker'),
       ),
-      body: Center(
-        child: _pages.elementAt(_selectedIndex),
-      ),
+      body: Center(child: _pages.elementAt(_selectedIndex)),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
