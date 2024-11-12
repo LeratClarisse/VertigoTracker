@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 import 'package:vertigotracker/src/features/logs/Domain/entity/vertigo_episode.dart';
 import 'package:vertigotracker/src/features/logs/Presentation/widgets/duration_picker.dart';
 
@@ -102,7 +103,7 @@ class _LogVertigoFormPageState extends State<LogVertigoFormPage> {
             children: [
               // Date picker
               ListTile(
-                title: Text("Date: ${_selectedDate.toLocal()}".split(' ')[0]),
+                title: Text("Date: ${DateFormat('dd.MM.yyyy').format(_selectedDate)}"),
                 trailing: Icon(Icons.calendar_today),
                 onTap: _selectDate,
               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:vertigotracker/src/features/logs/Domain/entity/vertigo_episode.dart';
 import 'log_vertigo_form_page.dart';
 
@@ -81,7 +82,8 @@ class _LogsScreenState extends State<LogsScreen> {
               itemBuilder: (context, index) {
                 final episode = box.getAt(index) as VertigoEpisode;
                 return ListTile(
-                  title: Text("Episode on ${episode.date.toLocal()}"),
+                  title: Text(
+                      "Episode on ${DateFormat('dd.MM.yyyy').format(episode.date)} ${DateFormat('HH:mm').format(episode.time)}"),
                   subtitle: Text("Duration: ${episode.durationHours}h ${episode.durationMinutes}m"),
                   trailing: IconButton(
                     icon: Icon(Icons.clear, color: Colors.red),
