@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
-import 'package:vertigotracker/src/features/logs/Domain/entity/vertigo_episode.dart';
+import 'package:vertigotracker/src/features/logs/Domain/entity/medicine.dart';
 import 'package:vertigotracker/src/features/logs/Presentation/widgets/duration_picker.dart';
+import 'package:vertigotracker/src/features/logs/Domain/entity/vertigo_episode.dart';
+import 'package:vertigotracker/src/features/logs/Presentation/widgets/medicine_list.dart';
 
 class LogVertigoFormPage extends StatefulWidget {
   const LogVertigoFormPage({Key? key}) : super(key: key);
@@ -22,8 +24,8 @@ class _LogVertigoFormPageState extends State<LogVertigoFormPage> {
   bool _acouphene = false;
   bool _earObstructed = false;
   String _comment = '';
+  List<Medicine> medicinesTaken = [];
 
-  // Method to open the Duration Picker and set the selected duration
   void _selectDuration() async {
     showDurationPicker(
       context,
@@ -64,6 +66,12 @@ class _LogVertigoFormPageState extends State<LogVertigoFormPage> {
     }
   }
 
+  void _addMedicine(List<Medicine> selectedMedicines) {
+    setState(() {
+      medicinesTaken = selectedMedicines;
+    });
+  }
+
   void _saveVertigoEpisode() async {
     if (_formKey.currentState?.validate() ?? false) {
       final vertigoEpisode = VertigoEpisode(
@@ -82,6 +90,7 @@ class _LogVertigoFormPageState extends State<LogVertigoFormPage> {
         acouphene: _acouphene,
         earObstructed: _earObstructed,
         comment: _comment,
+        medicinesTaken: medicinesTaken, // Add the medicines taken during the episode
       );
 
       final box = await Hive.openBox<VertigoEpisode>('vertigoEpisodes');
@@ -96,95 +105,99 @@ class _LogVertigoFormPageState extends State<LogVertigoFormPage> {
     return Scaffold(
       appBar: AppBar(title: Text('Log Vertigo Episode')),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              // Date picker
-              ListTile(
-                title: Text("Date: ${DateFormat('dd.MM.yyyy').format(_selectedDate)}"),
-                trailing: Icon(Icons.calendar_today),
-                onTap: _selectDate,
-              ),
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              children: [
+                // Date picker
+                ListTile(
+                  title: Text("Date: ${DateFormat('dd.MM.yyyy').format(_selectedDate)}"),
+                  trailing: Icon(Icons.calendar_today),
+                  onTap: _selectDate,
+                ),
 
-              // Time picker
-              ListTile(
-                title: Text("Time: ${_selectedTime.format(context)}"),
-                trailing: Icon(Icons.access_time),
-                onTap: _selectTime,
-              ),
+                // Time picker
+                ListTile(
+                  title: Text("Time: ${_selectedTime.format(context)}"),
+                  trailing: Icon(Icons.access_time),
+                  onTap: _selectTime,
+                ),
 
-              // Duration picker with display
-              ListTile(
-                title: Text("Duration: ${_durationHours}h ${_durationMinutes}m"),
-                trailing: Icon(Icons.timer),
-                onTap: _selectDuration,
-              ),
+                // Duration picker with display
+                ListTile(
+                  title: Text("Duration: ${_durationHours}h ${_durationMinutes}m"),
+                  trailing: Icon(Icons.timer),
+                  onTap: _selectDuration,
+                ),
 
-              // Nausea Toggle
-              SwitchListTile(
-                title: Text("Nausea"),
-                value: _nausea,
-                onChanged: (bool value) {
-                  setState(() {
-                    _nausea = value;
-                  });
-                },
-              ),
+                // Nausea Toggle
+                SwitchListTile(
+                  title: Text("Nausea"),
+                  value: _nausea,
+                  onChanged: (bool value) {
+                    setState(() {
+                      _nausea = value;
+                    });
+                  },
+                ),
 
-              // Throw Up Toggle
-              SwitchListTile(
-                title: Text("Throw Up"),
-                value: _throwUp,
-                onChanged: (bool value) {
-                  setState(() {
-                    _throwUp = value;
-                  });
-                },
-              ),
+                // Throw Up Toggle
+                SwitchListTile(
+                  title: Text("Throw Up"),
+                  value: _throwUp,
+                  onChanged: (bool value) {
+                    setState(() {
+                      _throwUp = value;
+                    });
+                  },
+                ),
 
-              // Acouphene Toggle
-              SwitchListTile(
-                title: Text("Acouphene"),
-                value: _acouphene,
-                onChanged: (bool value) {
-                  setState(() {
-                    _acouphene = value;
-                  });
-                },
-              ),
+                // Acouphene Toggle
+                SwitchListTile(
+                  title: Text("Acouphene"),
+                  value: _acouphene,
+                  onChanged: (bool value) {
+                    setState(() {
+                      _acouphene = value;
+                    });
+                  },
+                ),
 
-              // Ear obstructed Toggle
-              SwitchListTile(
-                title: Text("Ear obstructed"),
-                value: _earObstructed,
-                onChanged: (bool value) {
-                  setState(() {
-                    _earObstructed = value;
-                  });
-                },
-              ),
+                // Ear obstructed Toggle
+                SwitchListTile(
+                  title: Text("Ear obstructed"),
+                  value: _earObstructed,
+                  onChanged: (bool value) {
+                    setState(() {
+                      _earObstructed = value;
+                    });
+                  },
+                ),
 
-              // Comment Field
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Comment'),
-                onChanged: (value) {
-                  _comment = value;
-                },
-              ),
+                // Medicine Picker (Add Medicines)
+                MedicineListWidget(
+                  onMedicinesSelected: _addMedicine,
+                ),
 
-              SizedBox(height: 20),
+                // Comment Field
+                TextFormField(
+                  decoration: InputDecoration(labelText: 'Comment'),
+                  onChanged: (value) {
+                    _comment = value;
+                  },
+                ),
 
-              // Save Button
-              ElevatedButton(
-                onPressed: _saveVertigoEpisode,
-                child: Text('Save Episode'),
-              ),
-            ],
-          ),
-        ),
-      ),
+                SizedBox(height: 20),
+
+                // Save Button
+                ElevatedButton(
+                  onPressed: _saveVertigoEpisode,
+                  child: Text('Save Episode'),
+                ),
+              ],
+            ),
+          )),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:vertigotracker/src/core/utils/notification_service.dart';
+import 'package:vertigotracker/src/features/logs/Domain/entity/medicine.dart';
 import 'package:vertigotracker/src/features/logs/Domain/entity/vertigo_episode.dart';
 import 'package:vertigotracker/src/features/reminders/Domain/entity/reminder.dart';
 
@@ -13,9 +14,11 @@ Future<void> main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(VertigoEpisodeAdapter());
   Hive.registerAdapter(ReminderAdapter());
+  Hive.registerAdapter(MedicineAdapter());
   await Hive.openBox('settings');
   await Hive.openBox<VertigoEpisode>('vertigoEpisodes');
   await Hive.openBox<Reminder>('reminders');
+  await Hive.openBox<Medicine>('medicines');
 
   // Initialize notifications
   NotificationService.initialize();

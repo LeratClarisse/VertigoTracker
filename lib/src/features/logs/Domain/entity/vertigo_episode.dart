@@ -1,8 +1,9 @@
 import 'package:hive/hive.dart';
+import 'package:vertigotracker/src/features/logs/Domain/entity/medicine.dart';
 
 part 'vertigo_episode.g.dart';
 
-@HiveType(typeId: 0)
+@HiveType(typeId: 2)
 class VertigoEpisode extends HiveObject {
   @HiveField(0)
   DateTime date;
@@ -31,6 +32,9 @@ class VertigoEpisode extends HiveObject {
   @HiveField(8)
   String comment;
 
+  @HiveField(9)
+  List<Medicine> medicinesTaken; // Stores names of medicines taken
+
   VertigoEpisode({
     required this.date,
     required this.time,
@@ -41,5 +45,6 @@ class VertigoEpisode extends HiveObject {
     required this.acouphene,
     required this.earObstructed,
     required this.comment,
+    required this.medicinesTaken,
   });
 }

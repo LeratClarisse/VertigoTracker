@@ -8,7 +8,7 @@ part of 'vertigo_episode.dart';
 
 class VertigoEpisodeAdapter extends TypeAdapter<VertigoEpisode> {
   @override
-  final int typeId = 0;
+  final int typeId = 2;
 
   @override
   VertigoEpisode read(BinaryReader reader) {
@@ -26,13 +26,14 @@ class VertigoEpisodeAdapter extends TypeAdapter<VertigoEpisode> {
       acouphene: fields[6] as bool,
       earObstructed: fields[7] as bool,
       comment: fields[8] as String,
+      medicinesTaken: (fields[9] as List).cast<Medicine>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, VertigoEpisode obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.date)
       ..writeByte(1)
@@ -50,7 +51,9 @@ class VertigoEpisodeAdapter extends TypeAdapter<VertigoEpisode> {
       ..writeByte(7)
       ..write(obj.earObstructed)
       ..writeByte(8)
-      ..write(obj.comment);
+      ..write(obj.comment)
+      ..writeByte(9)
+      ..write(obj.medicinesTaken);
   }
 
   @override
