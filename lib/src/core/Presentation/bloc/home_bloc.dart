@@ -16,13 +16,21 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+  late PageController _pageController;
   VertigoEpisode? lastVertigo;
   Reminder? nextReminder;
 
   @override
   void initState() {
     super.initState();
+    _pageController = PageController(initialPage: _selectedIndex);
     _loadData();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   Future<void> _loadData() async {
@@ -58,9 +66,9 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _selectedIndex = index;
     });
-
-    if (_selectedIndex == 0) {
-      _loadData(); // Reload data when navigating to Home
+    _pageController.jumpToPage(index);
+    if (index == 0) {
+      _loadData();
     }
   }
 
@@ -70,7 +78,18 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text('Vertigo Tracker'),
       ),
-      body: Center(child: _pages.elementAt(_selectedIndex)),
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+          if (index == 0) {
+            _loadData();
+          }
+        },
+        children: _pages,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
