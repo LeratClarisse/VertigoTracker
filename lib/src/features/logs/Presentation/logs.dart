@@ -3,6 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:vertigotracker/src/features/logs/Domain/entity/vertigo_episode.dart';
 import 'package:vertigotracker/src/features/logs/Presentation/edit_vertigo_form_page.dart';
+import 'package:vertigotracker/src/features/logs/Presentation/vertigo_detail_page.dart';
 import 'log_vertigo_form_page.dart';
 
 class LogsScreen extends StatefulWidget {
@@ -112,6 +113,26 @@ class _LogsScreenState extends State<LogsScreen> {
                       ),
                     ],
                   ),
+                  onTap: () {
+                    // Navigate to the detail page with the data for this episode
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => VertigoEpisodeDetailPage(
+                          selectedDate: episode.date,
+                          selectedTime: TimeOfDay.fromDateTime(episode.time),
+                          durationHours: episode.durationHours,
+                          durationMinutes: episode.durationMinutes,
+                          nausea: episode.nausea,
+                          throwUp: episode.throwUp,
+                          acouphene: episode.acouphene,
+                          earObstructed: episode.earObstructed,
+                          selectedMedicines: episode.medicinesTaken,
+                          comment: episode.comment,
+                        ),
+                      ),
+                    );
+                  },
                 );
               },
             );
