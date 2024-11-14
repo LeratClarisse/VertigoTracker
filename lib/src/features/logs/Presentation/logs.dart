@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:vertigotracker/src/features/logs/Domain/entity/vertigo_episode.dart';
+import 'package:vertigotracker/src/features/logs/Presentation/edit_vertigo_form_page.dart';
 import 'log_vertigo_form_page.dart';
 
 class LogsScreen extends StatefulWidget {
@@ -85,9 +86,31 @@ class _LogsScreenState extends State<LogsScreen> {
                   title: Text(
                       "Episode on ${DateFormat('dd.MM.yyyy').format(episode.date)} ${DateFormat('HH:mm').format(episode.time)}"),
                   subtitle: Text("Duration: ${episode.durationHours}h ${episode.durationMinutes}m"),
-                  trailing: IconButton(
-                    icon: Icon(Icons.clear, color: Colors.red),
-                    onPressed: () => _showDeleteConfirmationDialog(index),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.edit, color: Colors.blue),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditVertigoFormPage(
+                                episodeKey: episode.key,
+                              ),
+                            ),
+                          );
+                        },
+                        tooltip: 'Edit Episode',
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.clear, color: Colors.red),
+                        onPressed: () {
+                          box.deleteAt(index);
+                        },
+                        tooltip: 'Delete Episode',
+                      ),
+                    ],
                   ),
                 );
               },

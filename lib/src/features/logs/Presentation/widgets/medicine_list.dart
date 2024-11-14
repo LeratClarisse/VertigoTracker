@@ -4,8 +4,13 @@ import 'package:vertigotracker/src/features/logs/Domain/entity/medicine.dart';
 
 class MedicineListWidget extends StatefulWidget {
   final ValueChanged<List<Medicine>> onMedicinesSelected;
+  final List<Medicine> initialSelectedMedicines;
 
-  const MedicineListWidget({Key? key, required this.onMedicinesSelected}) : super(key: key);
+  const MedicineListWidget({
+    Key? key,
+    required this.onMedicinesSelected,
+    this.initialSelectedMedicines = const [],
+  }) : super(key: key);
 
   @override
   _MedicineListWidgetState createState() => _MedicineListWidgetState();
@@ -19,6 +24,7 @@ class _MedicineListWidgetState extends State<MedicineListWidget> {
   void initState() {
     super.initState();
     _medicineBoxFuture = Hive.openBox<Medicine>('medicines');
+    selectedMedicines = List.from(widget.initialSelectedMedicines);
   }
 
   void _addNewMedicine() async {
@@ -44,14 +50,12 @@ class _MedicineListWidgetState extends State<MedicineListWidget> {
                 if (name.isNotEmpty) {
                   final newMedicine = Medicine(id: DateTime.now().millisecondsSinceEpoch, name: name);
                   final box = await Hive.openBox<Medicine>('medicines');
-                  await box.add(newMedicine); // Add new medicine to the box
+                  await box.add(newMedicine);
 
                   setState(() {
-                    // Automatically select the new medicine
                     selectedMedicines.add(newMedicine);
                   });
 
-                  // Notify parent widget with the updated selection
                   widget.onMedicinesSelected(selectedMedicines);
                 }
                 Navigator.of(context).pop();
@@ -77,7 +81,6 @@ class _MedicineListWidgetState extends State<MedicineListWidget> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Add Medicine button
               Row(
                 children: [
                   Text('Medicines Taken:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
@@ -93,10 +96,15 @@ class _MedicineListWidgetState extends State<MedicineListWidget> {
           );
         } else {
           final medicineBox = snapshot.data!;
+          // Ensure all initially selected medicines are displayed
+          final allMedicines = [
+            ...medicineBox.values,
+            ...selectedMedicines.where((med) => !medicineBox.values.contains(med)),
+          ];
+
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Add Medicine button
               Row(
                 children: [
                   Text('Medicines Taken:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
@@ -107,13 +115,12 @@ class _MedicineListWidgetState extends State<MedicineListWidget> {
                   ),
                 ],
               ),
-              // Medicine list
               Wrap(
                 spacing: 8.0,
-                children: medicineBox.values.map((medicine) {
+                children: allMedicines.map((medicine) {
                   final isSelected = selectedMedicines.contains(medicine);
                   return Container(
-                    margin: EdgeInsets.only(bottom: 8.0), // Add space between chips
+                    margin: EdgeInsets.only(bottom: 8.0),
                     child: InputChip(
                       label: Text(medicine.name),
                       selected: isSelected,
@@ -128,15 +135,11 @@ class _MedicineListWidgetState extends State<MedicineListWidget> {
                         widget.onMedicinesSelected(selectedMedicines);
                       },
                       onDeleted: () {
-                        // Remove from selectedMedicines
                         setState(() {
                           selectedMedicines.remove(medicine);
                         });
 
-                        // Delete from the Hive box
                         medicineBox.delete(medicine.key);
-
-                        // Notify the parent widget about the updated selection
                         widget.onMedicinesSelected(selectedMedicines);
                       },
                     ),

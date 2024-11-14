@@ -75,28 +75,27 @@ class _LogVertigoFormPageState extends State<LogVertigoFormPage> {
   void _saveVertigoEpisode() async {
     if (_formKey.currentState?.validate() ?? false) {
       final vertigoEpisode = VertigoEpisode(
-        date: _selectedDate,
-        time: DateTime(
-          _selectedDate.year,
-          _selectedDate.month,
-          _selectedDate.day,
-          _selectedTime.hour,
-          _selectedTime.minute,
-        ),
-        durationHours: _durationHours,
-        durationMinutes: _durationMinutes,
-        nausea: _nausea,
-        throwUp: _throwUp,
-        acouphene: _acouphene,
-        earObstructed: _earObstructed,
-        comment: _comment,
-        medicinesTaken: medicinesTaken, // Add the medicines taken during the episode
-      );
+          date: _selectedDate,
+          time: DateTime(
+            _selectedDate.year,
+            _selectedDate.month,
+            _selectedDate.day,
+            _selectedTime.hour,
+            _selectedTime.minute,
+          ),
+          durationHours: _durationHours,
+          durationMinutes: _durationMinutes,
+          nausea: _nausea,
+          throwUp: _throwUp,
+          acouphene: _acouphene,
+          earObstructed: _earObstructed,
+          comment: _comment,
+          medicinesTaken: medicinesTaken);
 
       final box = await Hive.openBox<VertigoEpisode>('vertigoEpisodes');
       await box.add(vertigoEpisode);
 
-      Navigator.pop(context, true); // Return to previous screen after save
+      Navigator.pop(context, true);
     }
   }
 
