@@ -61,7 +61,7 @@ class _ReminderFormPageState extends State<ReminderFormPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               ListTile(
-                title: Text("Reminder Time: ${_selectedTime.hour}:${_selectedTime.minute}"),
+                title: Text("Reminder Time: ${_selectedTime.hour}:${_selectedTime.minute.toString().padLeft(2, '0')}"),
                 trailing: Icon(Icons.access_time),
                 onTap: _selectTime,
               ),

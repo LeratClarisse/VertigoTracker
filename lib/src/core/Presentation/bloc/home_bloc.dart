@@ -57,7 +57,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   List<Widget> get _pages => [
-        Home(lastVertigo: lastVertigo, nextReminder: nextReminder), // Dynamically passing data
+        Home(
+          lastVertigo: lastVertigo,
+          nextReminder: nextReminder,
+          onDataUpdated: _loadData,
+        ), // Dynamically passing data
         LogsScreen(),
         ReminderListScreen(),
       ];

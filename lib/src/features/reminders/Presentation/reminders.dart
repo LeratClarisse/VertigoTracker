@@ -77,7 +77,7 @@ class _ReminderListScreenState extends State<ReminderListScreen> {
                 final reminder = box.getAt(index) as Reminder;
                 return ListTile(
                   title: Text("Reminder: ${reminder.message}"),
-                  subtitle: Text("Time: ${reminder.time.hour}:${reminder.time.minute}"),
+                  subtitle: Text("Time: ${reminder.time.hour}:${reminder.time.minute.toString().padLeft(2, '0')}"),
                   trailing: IconButton(
                     icon: Icon(Icons.clear, color: Colors.red),
                     onPressed: () => _showDeleteConfirmationDialog(index),

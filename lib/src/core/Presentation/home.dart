@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:vertigotracker/src/features/logs/Domain/entity/vertigo_episode.dart';
 import 'package:vertigotracker/src/features/logs/Presentation/log_vertigo_form_page.dart';
 import 'package:vertigotracker/src/features/reminders/Domain/entity/reminder.dart';
@@ -7,7 +8,9 @@ import 'package:vertigotracker/src/features/reminders/Presentation/reminders_for
 class Home extends StatelessWidget {
   final VertigoEpisode? lastVertigo;
   final Reminder? nextReminder;
-  const Home({Key? key, required this.lastVertigo, required this.nextReminder}) : super(key: key);
+  final Future<void> Function() onDataUpdated;
+
+  const Home({Key? key, required this.lastVertigo, required this.nextReminder, required this.onDataUpdated}) : super(key: key);
 
   // Calculate the days since the last vertigo episode
   int _daysSinceLastVertigo() {
@@ -29,6 +32,7 @@ class Home extends StatelessWidget {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Vertigo episode logged successfully')),
       );
+      onDataUpdated();
     }
   }
 
@@ -43,6 +47,7 @@ class Home extends StatelessWidget {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Reminder created successfully')),
       );
+      onDataUpdated();
     }
   }
 
@@ -68,12 +73,12 @@ class Home extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    'Next Reminder: ${nextReminder != null ? "${nextReminder!.time.hour}:${nextReminder!.time.minute} - ${nextReminder!.message}" : "No reminders set"}',
+                    'Next Reminder: ${nextReminder != null ? "${nextReminder!.time.hour}:${nextReminder!.time.minute.toString().padLeft(2, '0')}" : "No reminders set"}',
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Last Episode: ${lastVertigo != null ? "${_formatDate(lastVertigo!.date)} - Duration: ${lastVertigo!.durationHours}h ${lastVertigo!.durationMinutes}m" : "No episodes logged"}',
+                    'Last Episode: ${lastVertigo != null ? "${DateFormat('dd.MM.yyyy').format(lastVertigo!.date)} - Duration: ${lastVertigo!.durationHours}h ${lastVertigo!.durationMinutes}m" : "No episodes logged"}',
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(height: 8),
