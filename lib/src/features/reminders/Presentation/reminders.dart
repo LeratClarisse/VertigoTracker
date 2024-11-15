@@ -34,21 +34,21 @@ class _ReminderListScreenState extends State<ReminderListScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Confirm Deletion'),
-          content: Text('Are you sure you want to delete this reminder?'),
+          title: Text('Confirmer la suppression'),
+          content: Text('Voulez-vous vraiment supprimer ce rappel ?'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: Text('Cancel'),
+              child: Text('Annuler'),
             ),
             TextButton(
               onPressed: () {
                 _deleteReminder(key);
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: Text('Delete'),
+              child: Text('Supprimer'),
             ),
           ],
         );
@@ -64,12 +64,12 @@ class _ReminderListScreenState extends State<ReminderListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Reminders')),
+      appBar: AppBar(title: Text('Rappels')),
       body: ValueListenableBuilder(
         valueListenable: reminderBox.listenable(),
         builder: (context, Box<Reminder> box, _) {
           if (box.isEmpty) {
-            return Center(child: Text('No reminders set.'));
+            return Center(child: Text('Aucun rappel'));
           } else {
             return ListView.builder(
               itemCount: box.length,
@@ -78,8 +78,8 @@ class _ReminderListScreenState extends State<ReminderListScreen> {
                 return Card(
                     elevation: 4,
                     child: ListTile(
-                      title: Text("Reminder: ${reminder.message}"),
-                      subtitle: Text("Time: ${reminder.time.hour}:${reminder.time.minute.toString().padLeft(2, '0')}"),
+                      title: Text("Rappel: ${reminder.message}"),
+                      subtitle: Text("Heure: ${reminder.time.hour}:${reminder.time.minute.toString().padLeft(2, '0')}"),
                       trailing: IconButton(
                         icon: Icon(Icons.clear, color: Colors.red),
                         onPressed: () => _showDeleteConfirmationDialog(reminder.key),
@@ -92,7 +92,7 @@ class _ReminderListScreenState extends State<ReminderListScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _navigateToReminderForm,
-        tooltip: 'Add Reminder',
+        tooltip: 'Ajouter un rappel',
         child: Icon(Icons.add),
       ),
     );

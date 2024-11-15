@@ -143,7 +143,7 @@ class _EditVertigoFormPageState extends State<EditVertigoFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Edit Vertigo Episode')),
+      appBar: AppBar(title: Text('Modifier un vertige')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: _isEpisodeLoaded
@@ -158,19 +158,19 @@ class _EditVertigoFormPageState extends State<EditVertigoFormPage> {
                     ),
 
                     ListTile(
-                      title: Text("Time: ${_selectedTime.format(context)}"),
+                      title: Text("Heure: ${_selectedTime.format(context)}"),
                       trailing: Icon(Icons.access_time),
                       onTap: _selectTime,
                     ),
 
                     ListTile(
-                      title: Text("Duration: ${_durationHours}h ${_durationMinutes}m"),
+                      title: Text("Durée: ${_durationHours}h ${_durationMinutes}min"),
                       trailing: Icon(Icons.timer),
                       onTap: _selectDuration,
                     ),
 
                     SwitchListTile(
-                      title: Text("Nausea"),
+                      title: Text("Nausées"),
                       value: _nausea,
                       onChanged: (bool value) {
                         setState(() {
@@ -181,7 +181,7 @@ class _EditVertigoFormPageState extends State<EditVertigoFormPage> {
 
                     // Throw Up Toggle
                     SwitchListTile(
-                      title: Text("Throw Up"),
+                      title: Text("Vomissements"),
                       value: _throwUp,
                       onChanged: (bool value) {
                         setState(() {
@@ -192,7 +192,7 @@ class _EditVertigoFormPageState extends State<EditVertigoFormPage> {
 
                     // Acouphene Toggle
                     SwitchListTile(
-                      title: Text("Acouphene"),
+                      title: Text("Acouphènes"),
                       value: _acouphene,
                       onChanged: (bool value) {
                         setState(() {
@@ -203,7 +203,7 @@ class _EditVertigoFormPageState extends State<EditVertigoFormPage> {
 
                     // Ear obstructed Toggle
                     SwitchListTile(
-                      title: Text("Ear obstructed"),
+                      title: Text("Oreille bouchée"),
                       value: _earObstructed,
                       onChanged: (bool value) {
                         setState(() {
@@ -223,7 +223,7 @@ class _EditVertigoFormPageState extends State<EditVertigoFormPage> {
 
                     TextFormField(
                       controller: _commentController,
-                      decoration: InputDecoration(labelText: 'Comment'),
+                      decoration: InputDecoration(labelText: 'Commentaires'),
                       onChanged: (value) {
                         _commentController.text = value;
                       },
@@ -233,7 +233,7 @@ class _EditVertigoFormPageState extends State<EditVertigoFormPage> {
 
                     ElevatedButton(
                       onPressed: _saveEditedEpisode,
-                      child: Text('Save Changes'),
+                      child: Text('Enregistrer'),
                     ),
                   ],
                 ),

@@ -109,15 +109,15 @@ class _HomePageState extends State<HomePage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: 'Accueil',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
-            label: 'Logs',
+            label: 'Vertiges',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.alarm),
-            label: 'Reminders',
+            label: 'Rappels',
           )
         ],
         currentIndex: _selectedIndex,

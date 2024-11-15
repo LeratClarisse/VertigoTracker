@@ -34,15 +34,15 @@ class _MedicineListWidgetState extends State<MedicineListWidget> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Add New Medicine'),
+          title: Text('Ajouter un médicament'),
           content: TextField(
             controller: controller,
-            decoration: InputDecoration(hintText: 'Enter medicine name'),
+            decoration: InputDecoration(hintText: 'Nom'),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text('Cancel'),
+              child: Text('Annuler'),
             ),
             TextButton(
               onPressed: () async {
@@ -60,7 +60,7 @@ class _MedicineListWidgetState extends State<MedicineListWidget> {
                 }
                 Navigator.of(context).pop();
               },
-              child: Text('Add'),
+              child: Text('Ajouter'),
             ),
           ],
         );
@@ -76,22 +76,22 @@ class _MedicineListWidgetState extends State<MedicineListWidget> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
+          return Center(child: Text('Erreur: ${snapshot.error}'));
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
-                  Text('Medicines Taken:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  Text('Médicaments pris:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   IconButton(
                     icon: Icon(Icons.add),
                     onPressed: _addNewMedicine,
-                    tooltip: 'Add Medicine',
+                    tooltip: 'Ajouter un médicament',
                   ),
                 ],
               ),
-              Text('No medicines available.'),
+              Text('Aucun médicament'),
             ],
           );
         } else {
@@ -107,11 +107,11 @@ class _MedicineListWidgetState extends State<MedicineListWidget> {
             children: [
               Row(
                 children: [
-                  Text('Medicines Taken:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  Text('Médicaments pris:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   IconButton(
                     icon: Icon(Icons.add),
                     onPressed: _addNewMedicine,
-                    tooltip: 'Add Medicine',
+                    tooltip: 'Ajouter un médicament',
                   ),
                 ],
               ),

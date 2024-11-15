@@ -42,21 +42,21 @@ class _LogsScreenState extends State<LogsScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Confirm Deletion'),
-          content: Text('Are you sure you want to delete this vertigo episode?'),
+          title: Text('Confirmer la suppression'),
+          content: Text('Voulez-vous vraiment supprimer ce vertige ?'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: Text('Cancel'),
+              child: Text('Annuler'),
             ),
             TextButton(
               onPressed: () {
                 _deleteVertigoEpisode(key);
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: Text('Delete'),
+              child: Text('Supprimer'),
             ),
           ],
         );
@@ -72,12 +72,12 @@ class _LogsScreenState extends State<LogsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Vertigo Logs')),
+      appBar: AppBar(title: Text('Liste des vertiges')),
       body: ValueListenableBuilder(
         valueListenable: Hive.box<VertigoEpisode>('vertigoEpisodes').listenable(),
         builder: (context, Box<VertigoEpisode> box, _) {
           if (box.isEmpty) {
-            return Center(child: Text('No vertigo episodes logged.'));
+            return Center(child: Text('Aucun vertige'));
           } else {
             return ListView.builder(
               itemCount: box.length,
@@ -87,8 +87,8 @@ class _LogsScreenState extends State<LogsScreen> {
                     elevation: 4,
                     child: ListTile(
                       title: Text(
-                          "Episode on ${DateFormat('dd.MM.yyyy').format(episode.date)} ${DateFormat('HH:mm').format(episode.time)}"),
-                      subtitle: Text("Duration: ${episode.durationHours}h ${episode.durationMinutes}m"),
+                          "Vertige du ${DateFormat('dd.MM.yyyy').format(episode.date)} ${DateFormat('HH:mm').format(episode.time)}"),
+                      subtitle: Text("Durée: ${episode.durationHours}h ${episode.durationMinutes}min"),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -104,12 +104,12 @@ class _LogsScreenState extends State<LogsScreen> {
                                 ),
                               );
                             },
-                            tooltip: 'Edit Episode',
+                            tooltip: 'Modifier',
                           ),
                           IconButton(
                             icon: Icon(Icons.clear, color: Colors.red),
                             onPressed: () => _showDeleteConfirmationDialog(episode.key),
-                            tooltip: 'Delete Episode',
+                            tooltip: 'Supprimer',
                           ),
                         ],
                       ),
@@ -141,7 +141,7 @@ class _LogsScreenState extends State<LogsScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _navigateToLogVertigoForm,
-        tooltip: 'Log Vertigo Episode',
+        tooltip: 'Ajouter un vertige',
         child: Icon(Icons.add),
       ),
     );

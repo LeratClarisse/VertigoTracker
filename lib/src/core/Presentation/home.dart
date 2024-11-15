@@ -30,7 +30,7 @@ class Home extends StatelessWidget {
 
     if (result == true) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Vertigo episode logged successfully')),
+        SnackBar(content: Text('Vertige enregistré !')),
       );
       onDataUpdated();
     }
@@ -45,7 +45,7 @@ class Home extends StatelessWidget {
 
     if (result == true) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Reminder created successfully')),
+        SnackBar(content: Text('Rappel enregistré !')),
       );
       onDataUpdated();
     }
@@ -68,22 +68,22 @@ class Home extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Today\'s Overview',
+                    'Résumé',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 10),
                   Text(
-                    'Next Reminder: ${nextReminder != null ? "${nextReminder!.time.hour}:${nextReminder!.time.minute.toString().padLeft(2, '0')}" : "No reminders set"}',
+                    'Prochain rappel: ${nextReminder != null ? "${nextReminder!.time.hour}:${nextReminder!.time.minute.toString().padLeft(2, '0')}" : "Aucun rappel"}',
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Last Episode: ${lastVertigo != null ? "${DateFormat('dd.MM.yyyy').format(lastVertigo!.date)} - Duration: ${lastVertigo!.durationHours}h ${lastVertigo!.durationMinutes}m" : "No episodes logged"}',
+                    'Dernier vertige: ${lastVertigo != null ? "${DateFormat('dd.MM.yyyy').format(lastVertigo!.date)} - Durée: ${lastVertigo!.durationHours}h ${lastVertigo!.durationMinutes}m" : "Aucun vertige"}',
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Days Since Last Episode: ${lastVertigo != null ? _daysSinceLastVertigo() : "No episodes logged"}',
+                    'Nonbre de jours sans vertige: ${lastVertigo != null ? _daysSinceLastVertigo() : "Aucun vertige"}',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                 ],
@@ -95,12 +95,12 @@ class Home extends StatelessWidget {
           // Quick Actions Area
           ElevatedButton(
             onPressed: () => _navigateToLogVertigoForm(context),
-            child: Text('Log Vertigo Episode'),
+            child: Text('Ajouter un vertige'),
           ),
           SizedBox(height: 10),
           ElevatedButton(
             onPressed: () => _navigateToCreateReminderForm(context),
-            child: Text('Set Medication Reminder'),
+            child: Text('Ajouter un rappel'),
           ),
         ],
       ),

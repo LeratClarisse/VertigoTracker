@@ -42,40 +42,40 @@ class VertigoEpisodeDetailWidget extends StatelessWidget {
 
           // Time display
           ListTile(
-            title: Text("Time: ${selectedTime.format(context)}"),
+            title: Text("Heure: ${selectedTime.format(context)}"),
             trailing: Icon(Icons.access_time),
           ),
 
           // Duration display
           ListTile(
-            title: Text("Duration: $durationHours h $durationMinutes m"),
+            title: Text("Durée: $durationHours h $durationMinutes min"),
             trailing: Icon(Icons.timer),
           ),
 
           // Nausea display
           ListTile(
-            title: Text("Nausea: ${nausea ? 'Yes' : 'No'}"),
+            title: Text("Nausées: ${nausea ? 'Oui' : 'Non'}"),
           ),
 
           // Throw Up display
           ListTile(
-            title: Text("Throw Up: ${throwUp ? 'Yes' : 'No'}"),
+            title: Text("Vomissements: ${throwUp ? 'Oui' : 'Non'}"),
           ),
 
           // Acouphene display
           ListTile(
-            title: Text("Acouphene: ${acouphene ? 'Yes' : 'No'}"),
+            title: Text("Acouphènes: ${acouphene ? 'Oui' : 'Non'}"),
           ),
 
           // Ear Obstructed display
           ListTile(
-            title: Text("Ear Obstructed: ${earObstructed ? 'Yes' : 'No'}"),
+            title: Text("Oreille bouchée: ${earObstructed ? 'Oui' : 'Non'}"),
           ),
 
           // Medicines display
           if (selectedMedicines.isNotEmpty)
             ListTile(
-              title: Text("Medicines Taken:"),
+              title: Text("Médicaments pris:"),
               subtitle: Wrap(
                 spacing: 8.0,
                 children: selectedMedicines.map((medicine) => Chip(label: Text(medicine.name))).toList(),
@@ -85,7 +85,7 @@ class VertigoEpisodeDetailWidget extends StatelessWidget {
           // Comment display
           if (comment.isNotEmpty)
             ListTile(
-              title: Text("Comment: $comment"),
+              title: Text("Commentaires: $comment"),
             )
         ],
       ),

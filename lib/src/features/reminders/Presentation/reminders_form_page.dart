@@ -52,7 +52,7 @@ class _ReminderFormPageState extends State<ReminderFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Add Reminder')),
+      appBar: AppBar(title: Text('Ajouter un rappel')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -61,12 +61,12 @@ class _ReminderFormPageState extends State<ReminderFormPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               ListTile(
-                title: Text("Reminder Time: ${_selectedTime.hour}:${_selectedTime.minute.toString().padLeft(2, '0')}"),
+                title: Text("Heure: ${_selectedTime.hour}:${_selectedTime.minute.toString().padLeft(2, '0')}"),
                 trailing: Icon(Icons.access_time),
                 onTap: _selectTime,
               ),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Reminder Message'),
+                decoration: InputDecoration(labelText: 'Message'),
                 onChanged: (value) {
                   _message = value;
                 },
@@ -74,7 +74,7 @@ class _ReminderFormPageState extends State<ReminderFormPage> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _saveReminder,
-                child: Text('Save Reminder'),
+                child: Text('Enregistrer'),
               ),
             ],
           ),

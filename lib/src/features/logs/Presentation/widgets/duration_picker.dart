@@ -72,7 +72,7 @@ class _DurationPickerState extends State<DurationPicker> {
                 widget.onDurationChanged(duration);
                 Navigator.pop(context); // Close the modal
               },
-              child: Text('Done'),
+              child: Text('Ok'),
             ),
           ),
         ],

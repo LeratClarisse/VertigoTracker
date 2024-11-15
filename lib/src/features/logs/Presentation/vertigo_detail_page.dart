@@ -32,7 +32,7 @@ class VertigoEpisodeDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Episode Details")),
+      appBar: AppBar(title: Text("Détails du vertige")),
       body: VertigoEpisodeDetailWidget(
         selectedDate: selectedDate,
         selectedTime: selectedTime,
