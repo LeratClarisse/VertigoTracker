@@ -37,7 +37,7 @@ class _LogsScreenState extends State<LogsScreen> {
     }
   }
 
-  void _showDeleteConfirmationDialog(int index) {
+  void _showDeleteConfirmationDialog(int key) {
     showDialog(
       context: context,
       builder: (context) {
@@ -53,7 +53,7 @@ class _LogsScreenState extends State<LogsScreen> {
             ),
             TextButton(
               onPressed: () {
-                _deleteVertigoEpisode(index);
+                _deleteVertigoEpisode(key);
                 Navigator.of(context).pop(); // Close the dialog
               },
               child: Text('Delete'),
@@ -64,8 +64,8 @@ class _LogsScreenState extends State<LogsScreen> {
     );
   }
 
-  void _deleteVertigoEpisode(int index) {
-    vertigoBox.deleteAt(index); // Delete the episode at the specified index
+  void _deleteVertigoEpisode(int key) {
+    vertigoBox.delete(key); // Delete the episode at the specified index
     setState(() {}); // Refresh the UI after deletion
   }
 
@@ -83,57 +83,57 @@ class _LogsScreenState extends State<LogsScreen> {
               itemCount: box.length,
               itemBuilder: (context, index) {
                 final episode = box.getAt(index) as VertigoEpisode;
-                return ListTile(
-                  title: Text(
-                      "Episode on ${DateFormat('dd.MM.yyyy').format(episode.date)} ${DateFormat('HH:mm').format(episode.time)}"),
-                  subtitle: Text("Duration: ${episode.durationHours}h ${episode.durationMinutes}m"),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.edit, color: Colors.blue),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EditVertigoFormPage(
-                                episodeKey: episode.key,
-                              ),
+                return Card(
+                    elevation: 4,
+                    child: ListTile(
+                      title: Text(
+                          "Episode on ${DateFormat('dd.MM.yyyy').format(episode.date)} ${DateFormat('HH:mm').format(episode.time)}"),
+                      subtitle: Text("Duration: ${episode.durationHours}h ${episode.durationMinutes}m"),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.edit, color: Colors.blue),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => EditVertigoFormPage(
+                                    episodeKey: episode.key,
+                                  ),
+                                ),
+                              );
+                            },
+                            tooltip: 'Edit Episode',
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.clear, color: Colors.red),
+                            onPressed: () => _showDeleteConfirmationDialog(episode.key),
+                            tooltip: 'Delete Episode',
+                          ),
+                        ],
+                      ),
+                      onTap: () {
+                        // Navigate to the detail page with the data for this episode
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => VertigoEpisodeDetailPage(
+                              selectedDate: episode.date,
+                              selectedTime: TimeOfDay.fromDateTime(episode.time),
+                              durationHours: episode.durationHours,
+                              durationMinutes: episode.durationMinutes,
+                              nausea: episode.nausea,
+                              throwUp: episode.throwUp,
+                              acouphene: episode.acouphene,
+                              earObstructed: episode.earObstructed,
+                              selectedMedicines: episode.medicinesTaken,
+                              comment: episode.comment,
                             ),
-                          );
-                        },
-                        tooltip: 'Edit Episode',
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.clear, color: Colors.red),
-                        onPressed: () {
-                          box.deleteAt(index);
-                        },
-                        tooltip: 'Delete Episode',
-                      ),
-                    ],
-                  ),
-                  onTap: () {
-                    // Navigate to the detail page with the data for this episode
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => VertigoEpisodeDetailPage(
-                          selectedDate: episode.date,
-                          selectedTime: TimeOfDay.fromDateTime(episode.time),
-                          durationHours: episode.durationHours,
-                          durationMinutes: episode.durationMinutes,
-                          nausea: episode.nausea,
-                          throwUp: episode.throwUp,
-                          acouphene: episode.acouphene,
-                          earObstructed: episode.earObstructed,
-                          selectedMedicines: episode.medicinesTaken,
-                          comment: episode.comment,
-                        ),
-                      ),
-                    );
-                  },
-                );
+                          ),
+                        );
+                      },
+                    ));
               },
             );
           }

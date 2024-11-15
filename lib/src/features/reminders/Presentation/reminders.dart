@@ -29,7 +29,7 @@ class _ReminderListScreenState extends State<ReminderListScreen> {
     }
   }
 
-  void _showDeleteConfirmationDialog(int index) {
+  void _showDeleteConfirmationDialog(int key) {
     showDialog(
       context: context,
       builder: (context) {
@@ -45,7 +45,7 @@ class _ReminderListScreenState extends State<ReminderListScreen> {
             ),
             TextButton(
               onPressed: () {
-                _deleteReminder(index);
+                _deleteReminder(key);
                 Navigator.of(context).pop(); // Close the dialog
               },
               child: Text('Delete'),
@@ -56,8 +56,8 @@ class _ReminderListScreenState extends State<ReminderListScreen> {
     );
   }
 
-  void _deleteReminder(int index) {
-    reminderBox.deleteAt(index); // Delete the reminder at the specified index
+  void _deleteReminder(int key) {
+    reminderBox.delete(key); // Delete the reminder at the specified index
     setState(() {}); // Refresh the UI after deletion
   }
 
@@ -80,7 +80,7 @@ class _ReminderListScreenState extends State<ReminderListScreen> {
                   subtitle: Text("Time: ${reminder.time.hour}:${reminder.time.minute.toString().padLeft(2, '0')}"),
                   trailing: IconButton(
                     icon: Icon(Icons.clear, color: Colors.red),
-                    onPressed: () => _showDeleteConfirmationDialog(index),
+                    onPressed: () => _showDeleteConfirmationDialog(reminder.key),
                   ),
                 );
               },

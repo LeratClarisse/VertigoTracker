@@ -39,9 +39,20 @@ class _HomePageState extends State<HomePage> {
     lastVertigo = null;
     nextReminder = null;
 
-    // Get the last vertigo episode
     if (vertigoBox.isNotEmpty) {
-      lastVertigo = vertigoBox.getAt(vertigoBox.length - 1);
+      // Convert the box values to a list and sort by date and time
+      final episodes = vertigoBox.values.toList();
+      episodes.sort((a, b) {
+        // Compare dates first, then times if dates are equal
+        int dateComparison = b.date.compareTo(a.date);
+        if (dateComparison == 0) {
+          return b.time.compareTo(a.time);
+        }
+        return dateComparison;
+      });
+
+      // Get the latest episode
+      lastVertigo = episodes.first;
     }
 
     // Get the next reminder (upcoming based on time)

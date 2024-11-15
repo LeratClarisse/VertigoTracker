@@ -73,18 +73,20 @@ class VertigoEpisodeDetailWidget extends StatelessWidget {
           ),
 
           // Medicines display
-          ListTile(
-            title: Text("Medicines Taken:"),
-            subtitle: Wrap(
-              spacing: 8.0,
-              children: selectedMedicines.map((medicine) => Chip(label: Text(medicine.name))).toList(),
+          if (selectedMedicines.isNotEmpty)
+            ListTile(
+              title: Text("Medicines Taken:"),
+              subtitle: Wrap(
+                spacing: 8.0,
+                children: selectedMedicines.map((medicine) => Chip(label: Text(medicine.name))).toList(),
+              ),
             ),
-          ),
 
           // Comment display
-          ListTile(
-            title: Text("Comment: $comment"),
-          ),
+          if (comment.isNotEmpty)
+            ListTile(
+              title: Text("Comment: $comment"),
+            )
         ],
       ),
     );
